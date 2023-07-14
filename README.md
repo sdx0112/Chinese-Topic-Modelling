@@ -40,11 +40,14 @@ and have been shown to be efficient and comparable to fully fine-tuning. See [pa
 ![Image](./asset/tuning.png)
 
 Prior to this task, my team has conducted benchmarking analysis of `LLaMA-13B`, `Vicuna-13B`, `ChatGLM-6B` and `ChatGPT`. We designed questions from several
-aspects to compare their performance both in English and Chinese. The result shows `ChatGPT` is always the best, and `ChatGLM-6b` is ranked second on Chinese questions.
-`ChatGLM` is developed by Tsinghua University and recently the enhanced version [`ChatGLM2-6B`](https://github.com/THUDM/ChatGLM2-6B/tree/main)
+aspects to compare their performance both in English and Chinese. The result shows `ChatGPT` is always the best, and `ChatGLM-6B` is ranked second on Chinese questions.
+`ChatGLM` is developed by Tsinghua University and gained immense popularity. Recently the enhanced version [`ChatGLM2-6B`](https://github.com/THUDM/ChatGLM2-6B/tree/main)
 was released with new features and better performance. So `ChatGLM2-6B` is selected for this task.
 
-
+In this work:
+- For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is 87.5% and that of few-shot learning is 79.2%.
+- For `ChatGLM2-6B`, I tested [zero-shot learning, few-shot learning](ChatGLM2_6B_zero_shot_vs_few_shot.ipynb), and [P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb). 
+The accuracy of zero-shot learning is 12.5% and that of few-shot learning is 8.3%. The accuracy of P-tuning is 58%.
 
 ## 2. Topic classification at paragraph-level
 Due to the quota limitation of OpenAI API, I produced a small sample set using GPT-4 model. To classify the topic for entire dataset, ChatGLM2 is used here.
