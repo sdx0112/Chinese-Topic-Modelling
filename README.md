@@ -20,7 +20,10 @@ As the topics are pre-defined and there are no training data, I manually labelle
 Traditionally, this is a classification task. But building a classification model with 24 classes with a small training dataset will not produce acceptable performance.
 So large language models (LLMs) are adopted to do this task.
 
-There are two approaches to involve LLMs. One is to use OpenAI API to call GPT models. The other is to use open-sourced LLMs which can be deployed locally, such as LLaMA, Vicuna and ChatGLM.
+## 1. LLMs and improvement
+There are two approaches to involve LLMs. One is to use OpenAI API to call GPT models. The other is to use open-sourced LLMs
+which can be deployed locally, such as [`LLaMA`](https://github.com/facebookresearch/llama), [`Vicuna`](https://github.com/lm-sys/FastChat) 
+and [`ChatGLM`](https://github.com/THUDM/ChatGLM-6B).
 The following table compares some key features of the two approaches.
 
 |  Feature   |            OpenAI API             |                 Open-sourced models                 |
@@ -30,16 +33,29 @@ The following table compares some key features of the two approaches.
 |    Code    |           Not available           | Mostly available for train, inference and fine-tune |
 | Limitation | Monthly quota on number of tokens |        Need large GPU for better performance        |
 
+LLMs are trained on general data, and may not deliver good performance on tasks in specific data. To overcome this challenge, there are several
+ways to incorporate with a set of task-specific samples, such as few-shot learning, P-tuning, Prompt-tuning, Fine-tuning with LoRA.
+While few-shot learning is to explicitly put some examples in the prompt, the rest 3 methods employ a training process with a small training samples,
+and have been shown to be efficient and comparable to fully fine-tuning. See [paper](https://arxiv.org/pdf/2104.08691.pdf).
+![Image](./asset/tuning.png)
+
+Prior to this task, my team has conducted benchmarking analysis of `LLaMA-13B`, `Vicuna-13B`, `ChatGLM-6B` and `ChatGPT`. We designed questions from several
+aspects to compare their performance both in English and Chinese. The result shows `ChatGPT` is always the best, and `ChatGLM-6b` is ranked second on Chinese questions.
+`ChatGLM` is developed by Tsinghua University and recently the enhanced version [`ChatGLM2-6B`](https://github.com/THUDM/ChatGLM2-6B/tree/main)
+was released with new features and better performance. So `ChatGLM2-6B` is selected for this task.
 
 
-Zero shot, few shot, P-tuning, Prompt-tuning, Fine-tuning with LoRA
 
-Past work on comparing LLMs and why choose ChatGLM2-6B.
-
+## 2. Topic classification at paragraph-level
 Due to the quota limitation of OpenAI API, I produced a small sample set using GPT-4 model. To classify the topic for entire dataset, ChatGLM2 is used here.
 After the topic at paragraph-level and the topic for each title are generated, these topics are aggregated to document level.
 
 Performance of the two approaches
+
+## 3. Topic aggregation to document-level
+
+
+## 4. What about new topics?
 
 It is possible that LLM gives a new topic for some paragraph. There are two cases. One is that the paragraph is talking a topic in the pre-defined list but the LLM did not strictly follow the prompt.
 In this case we can find the topic in the pre-defined list which has the most similar embedding to the embedding of the new topic.
