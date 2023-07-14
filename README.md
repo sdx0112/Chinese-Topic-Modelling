@@ -91,11 +91,20 @@ The topics with top 3 increase from Year 2022 to Year 2023 are `企业发展`, `
 
 # Identify the subtopics or key messages for topic `企业发展` in Year 2023
 
-`企业发展` was selected here because it has most notes in Year 2023.
+`企业发展` was selected here because it has the largest number of notes in Year 2023.
 There are several ways to extract topics and key messages from a list of texts.
 - LDA: LDA is a topic modeling algorithm that helps uncover the underlying thematic structure in a collection of documents. It is an unsupervised machine learning technique that allows us to discover latent topics and their distribution in a corpus.
 - Summarizer: Summarizer automatically generates a concise and coherent summary that captures the most important information from a given text or set of texts. The key idea is to leverage natural language processing techniques to identify significant sentences or passages that effectively represent the main points or key messages of the original content.
 - LLM: LLM leverages the capabilities of a pre-trained language model, such as `GPT-4`, to automatically identify and generate concise summaries or key messages from a given text or set of texts. The key idea is to utilize the language model's understanding of context, semantics, and grammar to extract the most relevant and informative content.
+
+[LDA, summarizer and GPT-4 are tested](Subtopics%20Year%202023.ipynb). `ChatGLM2-6B` is also tested.
+The result from `GPT-4` is the most meaningful one:
+- 国有经济管理和改革：加强和改进国有经济管理，完善国有经济安全责任、质量结构、资产和企业管理，深化国有企业改。
+- 民营经济发展和优化：支持和促进民营经济发展，优化民营经济发展环境，解决制度障碍，以及破除影响各类所有制企业公平竞争、共同发展的法律法规障碍和隐性壁垒。
+- 全面深化改革：定位改革方向，明确目标任务，以及通过科学的谋划、创新的魄力来确保各项工作的推进。
+- 企业发展和科技创新：侧重科技创新在企业发展中的重要性，持续提振经营主体信心，帮助企业恢复元气。
+- 党的领导和监督：强调领导干部个人有关事项报告制度的重要性，以及进一步加强对领导干部的管理和监督。
+- 经济发展的总体基调：坚持稳中求进工作总基调，全面深化改革开放，形成推动高质量发展的强大动力，统筹推动经济运行持续好转、内生动力持续增强、社会预期持续改善、风险隐患持续化解。
 
 # Conclusion
 
