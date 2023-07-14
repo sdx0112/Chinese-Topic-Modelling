@@ -21,7 +21,16 @@ Traditionally, this is a classification task. But building a classification mode
 So large language models (LLMs) are adopted to do this task.
 
 There are two approaches to involve LLMs. One is to use OpenAI API to call GPT models. The other is to use open-sourced LLMs which can be deployed locally, such as LLaMA, Vicuna and ChatGLM.
-pros and cons of two approaches.
+The following table compares some key features of the two approaches.
+
+|  Feature   |            OpenAI API             |                 Open-sourced models                 |
+|:----------:|:---------------------------------:|:---------------------------------------------------:|
+|    Size    |         175B for ChatGPT          |        Most models have 6B, 7B, 13B versions        |
+|   Usage    |             Paid API              |              Mostly non-commercial use              |
+|    Code    |           Not available           | Mostly available for train, inference and fine-tune |
+| Limitation | Monthly quota on number of tokens |        Need large GPU for better performance        |
+
+
 
 Zero shot, few shot, P-tuning, Prompt-tuning, Fine-tuning with LoRA
 
