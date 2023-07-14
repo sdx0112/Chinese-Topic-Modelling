@@ -90,10 +90,12 @@ For each topic, the increase from Year 2022 to Year 2023 is measured by `percent
 The topics with top 3 increase from Year 2022 to Year 2023 are `企业发展`, `就业`, `区域发展`.
 
 # Identify the subtopics or key messages for topic `企业发展` in Year 2023
+
+`企业发展` was selected here because it has most notes in Year 2023.
 There are several ways to extract topics and key messages from a list of texts.
-LDA
-Summarizer
-LLM
+- LDA: LDA is a topic modeling algorithm that helps uncover the underlying thematic structure in a collection of documents. It is an unsupervised machine learning technique that allows us to discover latent topics and their distribution in a corpus.
+- Summarizer: Summarizer automatically generates a concise and coherent summary that captures the most important information from a given text or set of texts. The key idea is to leverage natural language processing techniques to identify significant sentences or passages that effectively represent the main points or key messages of the original content.
+- LLM: LLM leverages the capabilities of a pre-trained language model, such as `GPT-4`, to automatically identify and generate concise summaries or key messages from a given text or set of texts. The key idea is to utilize the language model's understanding of context, semantics, and grammar to extract the most relevant and informative content.
 
 # Conclusion
 
