@@ -36,7 +36,8 @@ The following table compares some key features of the two approaches.
 LLMs are trained on general data, and may not deliver good performance on tasks in specific data. To overcome this challenge, there are several
 ways to incorporate with a set of task-specific samples, such as few-shot learning, P-tuning, Prompt-tuning, Fine-tuning with LoRA.
 While few-shot learning is to explicitly put some examples in the prompt, the rest 3 methods employ a training process with a small training samples,
-and have been shown to be efficient and comparable to fully fine-tuning. See [paper](https://arxiv.org/pdf/2104.08691.pdf).
+and have been shown to be efficient and comparable to fully fine-tuning. See paper: [The Power of Scale for Parameter-Efficient Prompt Tuning
+](https://arxiv.org/pdf/2104.08691.pdf).
 ![Image](./asset/tuning.png)
 
 Prior to this task, my team has conducted benchmarking analysis of `LLaMA-13B`, `Vicuna-13B`, `ChatGLM-6B` and `ChatGPT`. We designed questions from several
@@ -44,18 +45,16 @@ aspects to compare their performance both in English and Chinese. The result sho
 `ChatGLM` is developed by Tsinghua University and gained immense popularity. Recently the enhanced version [`ChatGLM2-6B`](https://github.com/THUDM/ChatGLM2-6B/tree/main)
 was released with new features and better performance. So `ChatGLM2-6B` is selected for this task.
 
+## 2. Topic classification at paragraph-level
+
 In this work:
 - For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is `87.5%` and that of few-shot learning is `79.2%`.
 - For `ChatGLM2-6B`, I tested [zero-shot learning, few-shot learning](ChatGLM2_6B_zero_shot_vs_few_shot.ipynb), and [P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb). 
 The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`, which is a significant improvement.
 
-Due to the quota limitation of OpenAI API, I produced a small sample set using GPT-4 model. To classify the topic for entire dataset, ChatGLM2 is used here.
+Due to the quota limitation of OpenAI API, I can only produce a small sample set using [`GPT-4` model zero-shot learning](GPT-4%20Zero%20Shot%20Paragraph.ipynb).
+To classify the topic for entire dataset, [ChatGLM2 with P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb) is applied to the paragraph-level content `data/all_para.csv`.
 After the topic at paragraph-level and the topic for each title are generated, these topics are aggregated to document level.
-
-## 2. Topic classification at paragraph-level
-
-
-Performance of the two approaches
 
 ## 3. Topic aggregation to document-level
 
