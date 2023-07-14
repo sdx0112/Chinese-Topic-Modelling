@@ -73,7 +73,7 @@ For each document / note, the topic is aggregated by the following steps:
 - Include the topic obtained from the title.
 - Remove duplicates from the 3 topics produced above.
 
-The final output is saved to [`data/id_topics_all.csv`](Topic%20Aggregation%20Clean.ipynb).
+The final output is [generated](Topic%20Aggregation%20Clean.ipynb) and saved to `data/id_topics_all.csv`.
 
 ## 4. What about new topics?
 
@@ -84,9 +84,10 @@ When all such new topics are identified, we can use LLM again to cluster these n
 
 # Identify top 3 emerging topics in Year 2023
 To identify emerging topics in Year 2023, the first thought is to compare the topic frequency in Year 2022 and in Year 2023.
-Since there are only 9 notes in Year 2023, it is more meaningful to compare the frequency in percentage.
+Since there are only 9 notes in Year 2023, it is more meaningful to [compare the frequency in percentage](Emerging%20Topics%202023%20Clean.ipynb).
+For each topic, the increase from Year 2022 to Year 2023 is measured by `percentage in Year 2023 - percentage in Year 2022`.
 
-The top 3 topics which increases most in percentage from Year 2022 to Year 2023 are `出口贸易`, `企业发展`, `教育`.
+The topics with top 3 increase from Year 2022 to Year 2023 are `企业发展`, `就业`, `区域发展`.
 
 # Identify the subtopics or key messages for topic `企业发展` in Year 2023
 There are several ways to extract topics and key messages from a list of texts.
@@ -105,5 +106,3 @@ data/para_2023.txt: paragraphs in Year 2023 with topic "企业发展"
 
 
 # Code and Data
-
-Remove duplicated row in final output
