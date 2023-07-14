@@ -1,24 +1,34 @@
 # Chinese-Topic-Modelling
-Topic modelling for Chinese meeting notes followed by extensive topic analysis.
+This project focuses on performing topic modelling for Chinese meeting notes and conducting extensive topic analysis. The main objectives of the work are as follows:
+
+- Task 1: Find the topic of each meeting note.
+- Task 2: Identify the top 3 emerging topics in Year 2023.
+- Task 3: Analyze and identify subtopics and key messages within the meeting notes for one topic in task 2.
 
 # Data Exploration
 Please refer to [EDA.ipynb](EDA.ipynb) for details.
 
-The raw data `data/meeting notes.csv` contains 531 notes for 496 meetings, with two duplicated notes having the same content. The duplicated row is 
-the note for `政治局会议` with title `研究部署在全党深入开展党的群众路线教育实践活动`. The two rows only differ one character on the `TITLE`, so it should be a typo.
-The row with typo title was removed and the cleaned data was saved to `data/meeting notes clean.csv`.
+The raw data file data/meeting_notes.csv consists of 531 notes from 496 meetings. However, there are two duplicated notes with the same content. 
+The duplicated row corresponds to the note for the `政治局会议` with the title `研究部署在全党深入开展党的群众路线教育实践活动`. 
+It appears to be a typo as the two rows only differ by one character in the `TITLE` field.
 
-From the histogram of Year below, we can see the number of notes in Year 2023 is much smaller than that of Year 2022 (9 to 50).![Image](./asset/year_histogram.png)
+To address this issue, the row with the typo in the title was removed, and the cleaned data was saved to the file `data/meeting_notes_clean.csv`.
 
-Going deeply into Year 2023 notes, we can see we only have notes from Jan to Apr: ![Image](./asset/month_histogram.png)
+The histogram below illustrates the distribution of notes by year. It is evident from the histogram that the number of notes in the year 2023 is significantly smaller compared to the year 2022. 
+Specifically, there are 9 notes recorded in 2023, whereas 50 notes were documented in 2022.![Image](./asset/year_histogram.png)
+
+Upon closer examination of the notes from Year 2023, we observe that the available notes span only from January to April: ![Image](./asset/month_histogram.png)
 
 
 # Classify topics of the notes
-There are 24 pre-defined topics in the given task. Since each note contains multiple paragraphs, and they could talk about different topics, it is more reasonable to classify the topic at paragraph level instead of document level.
+In the given task, there are a total of 24 pre-defined topics. Considering that each note consists of multiple paragraphs, 
+and these paragraphs may discuss different topics, it is more reasonable to classify the topic at the paragraph level rather than the document level.
 
-As the topics are pre-defined and there are no training data, I manually labelled some paragraphs for training `data/labelled_sample.csv` and some others for testing `data/labelled_test.csv`.
-Traditionally, this is a classification task. But building a classification model with 24 classes with a small training dataset will not produce acceptable performance.
-So large language models (LLMs) are adopted to do this task.
+To address the challenge of having pre-defined topics without training data, I manually labeled certain paragraphs for training purposes, 
+which are stored in the file `data/labelled_sample.csv`. Additionally, some other paragraphs were labeled for testing and saved in `data/labelled_test.csv`.
+
+Typically, this task would involve classification. However, building a classification model with 24 classes using a small training dataset may not yield satisfactory performance. 
+Therefore, for this task, large language models (LLMs) are employed to achieve better results.
 
 ## 1. LLMs and improvement
 There are two approaches to involve LLMs. One is to use OpenAI API to call GPT models. The other is to use open-sourced LLMs
@@ -33,8 +43,9 @@ The following table compares some key features of the two approaches.
 |    Code    |           Not available           | Mostly available for train, inference and fine-tune |
 | Limitation | Monthly quota on number of tokens |        Need large GPU for better performance        |
 
-LLMs are trained on general data, and may not deliver good performance on tasks in specific data. To overcome this challenge, there are several
-ways to incorporate with a set of task-specific samples, such as few-shot learning, P-tuning, Prompt-tuning, Fine-tuning with LoRA.
+LLMs are trained on general data and may not perform optimally when applied to specific data tasks. 
+To address this challenge, there are several approaches to incorporate task-specific samples. 
+These approaches include: few-shot learning, P-tuning, Prompt-tuning, Fine-tuning with LoRA.
 While few-shot learning is to explicitly put some examples in the prompt, the rest 3 methods employ a training process with a small training samples,
 and have been shown to be efficient and comparable to fully fine-tuning. See paper: [The Power of Scale for Parameter-Efficient Prompt Tuning
 ](https://arxiv.org/pdf/2104.08691.pdf).
@@ -50,11 +61,13 @@ was released with new features and better performance. So `ChatGLM2-6B` is selec
 In this work:
 - For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is `87.5%` and that of few-shot learning is `79.2%`.
 - For `ChatGLM2-6B`, I tested [zero-shot learning, few-shot learning](Google_Colab/ChatGLM2_6B_zero_shot_vs_few_shot.ipynb), and [P-tuning](Google_Colab/ChatGLM2_6B_P_Tuning_v2.ipynb). 
-The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`, which is a significant improvement.
-The reason that the performance decreased from zero-shot learning to few-shot learning could be that the sample data is very small.
+The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`.
+It is worth noting that P-tuning exhibits a significant improvement in accuracy compared to both zero-shot and few-shot learning. 
 
-Due to the quota limitation of OpenAI API, I can only produce a small sample set using [`GPT-4` model zero-shot learning](GPT-4%20Zero%20Shot%20Paragraph.ipynb).
-Moreover, if the data contains sensitive information which cannot be sent to OpenAI API, open-sourced models will be the only choice.
+The decrease in performance from zero-shot learning to few-shot learning can potentially be attributed to the limited size of the sample data used in the latter approach.
+
+Due to the quota limitations of the OpenAI API, I was only able to generate a small sample set using [`GPT-4` model zero-shot learning](GPT-4%20Zero%20Shot%20Paragraph.ipynb).
+In cases where the data contains sensitive information that cannot be sent to the OpenAI API, utilizing open-sourced models becomes the only viable option.
 To classify the topic for entire dataset, [ChatGLM2 with P-tuning](Google_Colab/ChatGLM2_6B_P_Tuning_v2.ipynb) is applied to the paragraph-level content `data/all_para.csv` and titles `data/title_topic.csv`.
 
 Sometimes LLMs do not follow the prompt to pick a topic from pre-defined list. In this task, we map the new topic to one of the pre-defined topics in the following steps:
@@ -78,10 +91,15 @@ The final output is [generated](Topic%20Aggregation%20Clean.ipynb) and saved to 
 
 ## 4. What about new topics?
 
-It is possible that LLM gives a new topic for some paragraph. There are two cases. One is that the paragraph is talking a topic in the pre-defined list but the LLM did not strictly follow the prompt.
-In this case we can find the topic in the pre-defined list which has the most similar embedding to the embedding of the new topic.
-The other case is that the paragraph is indeed talking about something new. This case can be flagged out by setting a similarity threshold when looking for the most similar topic as in case one.
-When all such new topics are identified, we can use LLM again to cluster these new topics into a small number of more concentrate new topics, and suggest to include these new topics in the pre-defined list.
+There are two scenarios where a LLM may generate a new topic for a paragraph:
+
+- The paragraph discusses a topic that is already present in the pre-defined list, but the LLM did not strictly adhere to the provided prompt.
+In such cases, we can identify the topic from the pre-defined list that has the most similar embedding to the embedding of the generated new topic.
+
+- The paragraph introduces a genuinely new topic that is not covered by the pre-defined list. 
+To detect this scenario, a similarity threshold can be set when searching for the most similar topic, similar to the first case.
+Once all such new topics have been identified, the LLM can be utilized again to cluster these new topics into a smaller number of more focused topics. 
+These newly clustered topics can then be suggested for inclusion in the pre-defined list.
 
 # Identify top 3 emerging topics in Year 2023
 To identify emerging topics in Year 2023, the first thought is to compare the topic frequency in Year 2022 and in Year 2023.
@@ -109,14 +127,16 @@ The result from `GPT-4` is the most meaningful one:
 
 # Conclusion
 
-In this work, I have experimented LLMs such as `GPT-4` and `ChatGLM2-6B` to classify topics of long meeting notes with different improvement approaches
-including few-shot learning and P-tuning. The result shows that `GPT-4` has better performance. However, there are two crucial issues:
-- Scalability issue because of the quota limitation of OpenAI API.
-- Data privacy issue.
+In this work, I conducted experiments using LLMs, specifically `GPT-4` and `ChatGLM2-6B` to classify topics in lengthy meeting notes. 
+ I explored different improvement approaches, including few-shot learning and P-tuning. The results indicate that `GPT-4` outperformed other models in terms of performance. 
+However, two critical issues were identified:
+- Scalability issue: The quota limitation of the OpenAI API posed a challenge for scaling up the experiments.
+- Data privacy issue: The sensitivity of the meeting note data prevented the use of certain methods that require sending data to external APIs.
 
-P-tuning of `ChatGLM2-6B` on the small sample set shows great improvement, and the model can be deployed locally. So it will have widely promising applications.
+P-tuning of `ChatGLM2-6B` on a small sample set demonstrated significant improvement, and the model can be deployed locally. 
+This approach holds great promise for various applications.
 
-For topic extraction, LDA, summarizer and LLMs are tested and compared. The comparison shows LLM such as `GPT-4` produces the best result.
+For topic extraction, I compared LDA, summarizer and LLMs. The comparative analysis revealed that LLMs, especially `GPT-4`, produced the most favorable results for topic extraction.
 
 # Dependencies
 
@@ -133,7 +153,7 @@ pip3 install -r requirements.txt
 - Run [EDA.ipynb](EDA.ipynb) to perform data exploration and output cleaned version of raw data `data/meeting notes clean.csv`.
 - Manually labelled some paragraphs for training `data/labelled_sample.csv` and some others for testing `data/labelled_test.csv`.
 - Run [GPT-FewShot-Test.ipynb](GPT-FewShot-Test.ipynb) to perform `GPT-4` zero-shot learning and few-shot learning on sample data.
-- - Run [GPT-4 Zero Shot Paragraph.ipynb](GPT-4%20Zero%20Shot%20Paragraph.ipynb) to split content into paragraphs and saved to `data/all_para.csv`.
+- Run [GPT-4 Zero Shot Paragraph.ipynb](GPT-4%20Zero%20Shot%20Paragraph.ipynb) to split content into paragraphs and saved to `data/all_para.csv`.
 - Run [ChatGLM2_6B_zero_shot_vs_few_shot.ipynb](Google_Colab/ChatGLM2_6B_zero_shot_vs_few_shot.ipynb) to perform `ChatGLM2-6B` zero-shot learning and few-shot learning on sample data.
 - Run [ChatGLM2_6B_P_Tuning_v2.ipynb](Google_Colab/ChatGLM2_6B_P_Tuning_v2.ipynb) to perform P-tuning of `ChatGLM2-6B`, 
 and produce topics for all paragraphs and all titles. Outputs are saved to `data/generated_predictions_all.txt` and `data/generated_predictions_title.txt`.
