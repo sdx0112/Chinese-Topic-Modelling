@@ -51,13 +51,29 @@ In this work:
 - For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is `87.5%` and that of few-shot learning is `79.2%`.
 - For `ChatGLM2-6B`, I tested [zero-shot learning, few-shot learning](ChatGLM2_6B_zero_shot_vs_few_shot.ipynb), and [P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb). 
 The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`, which is a significant improvement.
+The reason that the performance decreased from zero-shot learning to few-shot learning could be that the sample data is very small.
 
 Due to the quota limitation of OpenAI API, I can only produce a small sample set using [`GPT-4` model zero-shot learning](GPT-4%20Zero%20Shot%20Paragraph.ipynb).
-To classify the topic for entire dataset, [ChatGLM2 with P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb) is applied to the paragraph-level content `data/all_para.csv`.
-After the topic at paragraph-level and the topic for each title are generated, these topics are aggregated to document level.
+To classify the topic for entire dataset, [ChatGLM2 with P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb) is applied to the paragraph-level content `data/all_para.csv` and titles `data/title_topic.csv`.
+
+Sometimes LLMs do not follow the prompt to pick a topic from pre-defined list. In this task, we map the new topic to one of the pre-defined topics in the following steps:
+- Get the embeddings of the new topic and the pre-defined topics.
+- Find the pre-defined topic which has the most similar embeddings to the new topic.
+- If the highest similarity score is lower than the threshold, then drop this paragraph. This assumes all paragraphs do not talk about any new topic.
+For the case where some paragraph is talking about new topics, refer to [here](#4-what-about-new-topics).
+
+Titles also play an important role in topic identification. So the same approach for paragraphs also applies to titles.
+
+After [the topic at paragraph-level and the topic for each title are generated](Aggregate_Topic.ipynb), these topics are aggregated to document level.
 
 ## 3. Topic aggregation to document-level
 
+For each document / note, the topic is aggregated by the following steps:
+- Get the top 2 frequent topics from its paragraphs.
+- Include the topic obtained from the title.
+- Remove duplicates from the 3 topics produced above.
+
+The final output is saved to [`data/id_topics_all.csv`](Topic%20Aggregation%20Clean.ipynb).
 
 ## 4. What about new topics?
 
@@ -84,3 +100,10 @@ LLM
 id_topics_all.csv: Topics at document level by using ChatGLM2-6B p-tuning. Each document has at most 3 topics. Topics are aggregated from content topics and title topics.
 
 data/para_2023.txt: paragraphs in Year 2023 with topic "企业发展"
+
+# Dependencies
+
+
+# Code and Data
+
+Remove duplicated row in final output
