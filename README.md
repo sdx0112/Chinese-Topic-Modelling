@@ -2,7 +2,7 @@
 Topic modelling for Chinese meeting notes followed by extensive topic analysis.
 
 # Data Exploration
-Please refer to [EDA.ipynb](https://github.com/sdx0112/Chinese-Topic-Modelling/blob/main/EDA.ipynb) for details.
+Please refer to [EDA.ipynb](EDA.ipynb) for details.
 
 The raw data `data/meeting notes.csv` contains 531 notes for 496 meetings, with two duplicated notes having the same content. The duplicated row is 
 the note for `政治局会议` with title `研究部署在全党深入开展党的群众路线教育实践活动`. The two rows only differ one character on the `TITLE`, so it should be a typo.
@@ -130,6 +130,17 @@ pip3 install -r requirements.txt
 
 # Code and Data
 
-id_topics_all.csv: Topics at document level by using ChatGLM2-6B p-tuning. Each document has at most 3 topics. Topics are aggregated from content topics and title topics.
-
-data/para_2023.txt: paragraphs in Year 2023 with topic "企业发展"
+- Run [EDA.ipynb](EDA.ipynb) to perform data exploration and output cleaned version of raw data `data/meeting notes clean.csv`.
+- Manually labelled some paragraphs for training `data/labelled_sample.csv` and some others for testing `data/labelled_test.csv`.
+- Run [GPT-FewShot-Test.ipynb](GPT-FewShot-Test.ipynb) to perform `GPT-4` zero-shot learning and few-shot learning on sample data.
+- - Run [GPT-4 Zero Shot Paragraph.ipynb](GPT-4%20Zero%20Shot%20Paragraph.ipynb) to split content into paragraphs and saved to `data/all_para.csv`.
+- Run [ChatGLM2_6B_zero_shot_vs_few_shot.ipynb](Google_Colab/ChatGLM2_6B_zero_shot_vs_few_shot.ipynb) to perform `ChatGLM2-6B` zero-shot learning and few-shot learning on sample data.
+- Run [ChatGLM2_6B_P_Tuning_v2.ipynb](Google_Colab/ChatGLM2_6B_P_Tuning_v2.ipynb) to perform P-tuning of `ChatGLM2-6B`, 
+and produce topics for all paragraphs and all titles. Outputs are saved to `data/generated_predictions_all.txt` and `data/generated_predictions_title.txt`.
+- Run [Topic Mapping.ipynb](Topic%20Mapping.ipynb) to produce cleaned topics for all paragraphs and all titles.
+Outputs are saved to `data/para_topic.csv` and `data/title_topic.csv`.
+- Run [Aggregate_Topic.ipynb](Google_Colab/Aggregate_Topic.ipynb) to aggregate topics for each note and save to `data/id_topic_3.csv`.
+- Run [Topic Aggregation Clean.ipynb](Topic%20Aggregation%20Clean.ipynb) to produce the final clean topics for each note and save to `data/id_topics_all.csv`.
+- Run [Emerging Topics 2023 Clean.ipynb](Emerging%20Topics%202023%20Clean.ipynb) to identify top 3 emerging topics in Year 2023.
+- Run [Subtopics Year 2023.ipynb](Subtopics%20Year%202023.ipynb) to compare LDA, summarizer and `GPT-4` to extract subtopics and key messages.
+- Run [Identify_topics_and_key_messages.ipynb](Google_Colab/Identify_topics_and_key_messages.ipynb) to extract subtopics and key messages using `ChatGLM2-6B`.
