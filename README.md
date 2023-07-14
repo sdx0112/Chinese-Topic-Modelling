@@ -150,7 +150,7 @@ Install all requirements:
 ```shell
 pip3 install -r requirements.txt
 ```
-
+`Python` version is `3.10`.
 # Code and Data
 
 - Run [EDA.ipynb](EDA.ipynb) to perform data exploration and output cleaned version of raw data `data/meeting notes clean.csv`.
