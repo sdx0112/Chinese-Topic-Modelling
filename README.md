@@ -54,6 +54,7 @@ The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `
 The reason that the performance decreased from zero-shot learning to few-shot learning could be that the sample data is very small.
 
 Due to the quota limitation of OpenAI API, I can only produce a small sample set using [`GPT-4` model zero-shot learning](GPT-4%20Zero%20Shot%20Paragraph.ipynb).
+Moreover, if the data contains sensitive information which cannot be sent to OpenAI API, open-sourced models will be the only choice.
 To classify the topic for entire dataset, [ChatGLM2 with P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb) is applied to the paragraph-level content `data/all_para.csv` and titles `data/title_topic.csv`.
 
 Sometimes LLMs do not follow the prompt to pick a topic from pre-defined list. In this task, we map the new topic to one of the pre-defined topics in the following steps:
@@ -97,7 +98,7 @@ There are several ways to extract topics and key messages from a list of texts.
 - Summarizer: Summarizer automatically generates a concise and coherent summary that captures the most important information from a given text or set of texts. The key idea is to leverage natural language processing techniques to identify significant sentences or passages that effectively represent the main points or key messages of the original content.
 - LLM: LLM leverages the capabilities of a pre-trained language model, such as `GPT-4`, to automatically identify and generate concise summaries or key messages from a given text or set of texts. The key idea is to utilize the language model's understanding of context, semantics, and grammar to extract the most relevant and informative content.
 
-[LDA, summarizer and GPT-4 are tested](Subtopics%20Year%202023.ipynb). `ChatGLM2-6B` is also tested.
+[LDA, summarizer and GPT-4 are tested](Subtopics%20Year%202023.ipynb). `ChatGLM2-6B` is also [tested](Identify_topics_and_key_messages.ipynb).
 The result from `GPT-4` is the most meaningful one:
 - 国有经济管理和改革：加强和改进国有经济管理，完善国有经济安全责任、质量结构、资产和企业管理，深化国有企业改。
 - 民营经济发展和优化：支持和促进民营经济发展，优化民营经济发展环境，解决制度障碍，以及破除影响各类所有制企业公平竞争、共同发展的法律法规障碍和隐性壁垒。
@@ -108,12 +109,21 @@ The result from `GPT-4` is the most meaningful one:
 
 # Conclusion
 
+In this work, I have experimented LLMs such as `GPT-4` and `ChatGLM2-6B` to classify topics of long meeting notes with different improvement approaches
+including few-shot learning and P-tuning. The result shows that `GPT-4` has better performance. However, there are two crucial issues:
+- Scalability issue because of the quota limitation of OpenAI API.
+- Data privacy issue.
+
+P-tuning of `ChatGLM2-6B` on the small sample set shows great improvement, and the model can be deployed locally. So it will have widely promising applications.
+
+For topic extraction, LDA, summarizer and LLMs are tested and compared. The comparison shows LLM such as `GPT-4` produces the best result.
+
+# Dependencies
+
+In this work, the model `ChatGLM2-6B` was running on one V100 GPU in GCP.
+
+# Code and Data
 
 id_topics_all.csv: Topics at document level by using ChatGLM2-6B p-tuning. Each document has at most 3 topics. Topics are aggregated from content topics and title topics.
 
 data/para_2023.txt: paragraphs in Year 2023 with topic "企业发展"
-
-# Dependencies
-
-
-# Code and Data
