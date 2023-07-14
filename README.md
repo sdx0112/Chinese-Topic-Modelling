@@ -1,4 +1,4 @@
-# Chinese-Topic-Modelling
+# Topic Modelling from Chinese Meeting Notes
 This project focuses on performing topic modelling for Chinese meeting notes and conducting extensive topic analysis. The main objectives of the work are as follows:
 
 - Task 1: Find the topic of each meeting note.
@@ -106,7 +106,10 @@ To identify emerging topics in Year 2023, the first thought is to compare the to
 Since there are only 9 notes in Year 2023, it is more meaningful to [compare the frequency in percentage](Emerging%20Topics%202023%20Clean.ipynb).
 For each topic, the increase from Year 2022 to Year 2023 is measured by `percentage in Year 2023 - percentage in Year 2022`.
 
-The topics with top 3 increase from Year 2022 to Year 2023 are `企业发展`, `就业`, `区域发展`.
+The top 3 topics that experienced the highest increase from Year 2022 to Year 2023, sorted in descending order, are as follows:
+- `企业发展`
+- `就业`
+- `区域发展`
 
 # Identify the subtopics or key messages for topic `企业发展` in Year 2023
 
