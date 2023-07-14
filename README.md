@@ -4,22 +4,23 @@ Topic modelling for Chinese meeting notes followed by extensive topic analysis.
 # Data Exploration
 Please refer to [EDA.ipynb](https://github.com/sdx0112/Chinese-Topic-Modelling/blob/main/EDA.ipynb) for details.
 
-The raw data `meeting notes.csv` contains 531 notes for 496 meetings, with two duplicated notes having the same content. The duplicated row is 
+The raw data `data/meeting notes.csv` contains 531 notes for 496 meetings, with two duplicated notes having the same content. The duplicated row is 
 the note for `政治局会议` with title `研究部署在全党深入开展党的群众路线教育实践活动`. The two rows only differ one character on the `TITLE`, so it should be a typo.
-The row with typo title was removed and the cleaned data was saved to `meeting notes clean.csv`.
+The row with typo title was removed and the cleaned data was saved to `data/meeting notes clean.csv`.
 
-From the histogram of Year, we can see the number of notes in Year 2023 is much smaller than that of Year 2022 (9 to 50).
+From the histogram of Year below, we can see the number of notes in Year 2023 is much smaller than that of Year 2022 (9 to 50).![Image](./asset/year_histogram.png)
+
+Going deeply into Year 2023 notes, we can see we only have notes from Jan to Apr: ![Image](./asset/month_histogram.png)
+
 
 # Classify topics of the notes
-Since each note contains multiple paragraphs, and they could talk about different topics, it is more reasonable to classify the topic at paragraph level instead of document level.
+There are 24 pre-defined topics in the given task. Since each note contains multiple paragraphs, and they could talk about different topics, it is more reasonable to classify the topic at paragraph level instead of document level.
 
-which code split the document?
-
-As the topics are pre-defined and there are no labelled data, I manually labelled some paragraphs for training and some others for validation.
+As the topics are pre-defined and there are no training data, I manually labelled some paragraphs for training `data/labelled_sample.csv` and some others for testing `data/labelled_test.csv`.
 Traditionally, this is a classification task. But building a classification model with 24 classes with a small training dataset will not produce acceptable performance.
 So large language models (LLMs) are adopted to do this task.
 
-There are two approaches to involve LLMs. One is to use OpenAI API. The other is to use open-sourced LLMs such as LLama and ChatGLM.
+There are two approaches to involve LLMs. One is to use OpenAI API to call GPT models. The other is to use open-sourced LLMs which can be deployed locally, such as LLaMA, Vicuna and ChatGLM.
 pros and cons of two approaches.
 
 Zero shot, few shot, P-tuning, Prompt-tuning, Fine-tuning with LoRA
