@@ -45,13 +45,15 @@ aspects to compare their performance both in English and Chinese. The result sho
 was released with new features and better performance. So `ChatGLM2-6B` is selected for this task.
 
 In this work:
-- For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is 87.5% and that of few-shot learning is 79.2%.
+- For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is `87.5%` and that of few-shot learning is `79.2%`.
 - For `ChatGLM2-6B`, I tested [zero-shot learning, few-shot learning](ChatGLM2_6B_zero_shot_vs_few_shot.ipynb), and [P-tuning](ChatGLM2_6B_P_Tuning_v2.ipynb). 
-The accuracy of zero-shot learning is 12.5% and that of few-shot learning is 8.3%. The accuracy of P-tuning is 58%.
+The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`, which is a significant improvement.
 
-## 2. Topic classification at paragraph-level
 Due to the quota limitation of OpenAI API, I produced a small sample set using GPT-4 model. To classify the topic for entire dataset, ChatGLM2 is used here.
 After the topic at paragraph-level and the topic for each title are generated, these topics are aggregated to document level.
+
+## 2. Topic classification at paragraph-level
+
 
 Performance of the two approaches
 
