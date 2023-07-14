@@ -160,9 +160,11 @@ pip3 install -r requirements.txt
 - Run [ChatGLM2_6B_zero_shot_vs_few_shot.ipynb](Google_Colab/ChatGLM2_6B_zero_shot_vs_few_shot.ipynb) to perform `ChatGLM2-6B` zero-shot learning and few-shot learning on sample data.
 - Run [ChatGLM2_6B_P_Tuning_v2.ipynb](Google_Colab/ChatGLM2_6B_P_Tuning_v2.ipynb) to perform P-tuning of `ChatGLM2-6B`, 
 and produce topics for all paragraphs and all titles. Outputs are saved to `data/generated_predictions_all.txt` and `data/generated_predictions_title.txt`.
-- Run [Topic Mapping.ipynb](Topic%20Mapping.ipynb) to produce cleaned topics for all paragraphs and all titles.
+- Run [Topic Mapping.ipynb](Topic%20Mapping.ipynb) to produce raw topics for all paragraphs and all titles.
 Outputs are saved to `data/para_topic.csv` and `data/title_topic.csv`.
-- Run [Aggregate_Topic.ipynb](Google_Colab/Aggregate_Topic.ipynb) to aggregate topics for each note and save to `data/id_topic_3.csv`.
+- Run [Aggregate_Topic.ipynb](Google_Colab/Aggregate_Topic.ipynb) to aggregate topics for each note and save to `data/id_topic_3.csv`. 
+It also produces the clean version for all paragraphs and all titles.
+Outputs are saved to `data/para_topic_clean.csv` and `data/title_topic_clean.csv`.
 - Run [Topic Aggregation Clean.ipynb](Topic%20Aggregation%20Clean.ipynb) to produce the final clean topics for each note and save to `data/id_topics_all.csv`.
 - Run [Emerging Topics 2023 Clean.ipynb](Emerging%20Topics%202023%20Clean.ipynb) to identify top 3 emerging topics in Year 2023.
 - Run [Subtopics Year 2023.ipynb](Subtopics%20Year%202023.ipynb) to compare LDA, summarizer and `GPT-4` to extract subtopics and key messages.
