@@ -122,6 +122,12 @@ For topic extraction, LDA, summarizer and LLMs are tested and compared. The comp
 
 In this work, the model `ChatGLM2-6B` was running on one V100 GPU in GCP.
 
+Install all requirements:
+
+```shell
+pip3 install -r requirements.txt
+```
+
 # Code and Data
 
 id_topics_all.csv: Topics at document level by using ChatGLM2-6B p-tuning. Each document has at most 3 topics. Topics are aggregated from content topics and title topics.
