@@ -17,11 +17,11 @@ To address this issue, the row with the typo in the title was removed, and the c
 The histogram below illustrates the distribution of notes by year. It is evident from the histogram that the number of notes in the year 2023 is significantly smaller compared to the year 2022. 
 Specifically, there are 9 notes recorded in 2023, whereas 50 notes were documented in 2022.
 
-<img src="./asset/year_histogram.png" width="300" height="200">
+<img src="./asset/year_histogram.png" width="600" height="400">
 
 Upon closer examination of the notes from Year 2023, we observe that the available notes span only from January to April: 
 
-<img src="./asset/month_histogram.png" width="300" height="200">
+<img src="./asset/month_histogram.png" width="600" height="400">
 
 # Task 1: Find the topic of each meeting note
 In the given task, there are a total of 24 pre-defined topics. Considering that each note consists of multiple paragraphs, 
