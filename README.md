@@ -33,22 +33,22 @@ Therefore, for this task, large language models (LLMs) are employed to achieve b
 ## 1. LLMs and improvement
 There are two approaches to involve LLMs. One is to use OpenAI API to call GPT models. The other is to use open-sourced LLMs
 which can be deployed locally, such as [`LLaMA`](https://github.com/facebookresearch/llama), [`Vicuna`](https://github.com/lm-sys/FastChat) 
-and [`ChatGLM`](https://github.com/THUDM/ChatGLM-6B).
+and [`ChatGLM`](https://github.com/THUDM/ChatGLM-6B)[[1]](#1).
 The following table compares some key features of the two approaches.
 
-|  Feature   |            OpenAI API             |                 Open-sourced models                 |
-|:----------:|:---------------------------------:|:---------------------------------------------------:|
-|    Size    |         175B for ChatGPT          |        Most models have 6B, 7B, 13B versions        |
-|   Usage    |             Paid API              |              Mostly non-commercial use              |
-|    Code    |           Not available           | Mostly available for train, inference and fine-tune |
-| Limitation | Monthly quota on number of tokens |        Need large GPU for better performance        |
+|  Feature   |             OpenAI API              |                 Open-sourced models                 |
+|:----------:|:-----------------------------------:|:---------------------------------------------------:|
+|    Size    | 175B for ChatGPT, unknown for GPT-4 |        Most models have 6B, 7B, 13B versions        |
+|   Usage    |              Paid API               |              Mostly non-commercial use              |
+|    Code    |            Not available            | Mostly available for train, inference and fine-tune |
+| Limitation |  Monthly quota on number of tokens  |        Need large GPU for better performance        |
 
 LLMs are trained on general data and may not perform optimally when applied to specific data tasks. 
 To address this challenge, there are several approaches to incorporate task-specific samples. 
 These approaches include: few-shot learning, P-tuning, Prompt-tuning, Fine-tuning with LoRA.
 While few-shot learning is to explicitly put some examples in the prompt, the rest 3 methods employ a training process with a small training samples,
 and have been shown to be efficient and comparable to fully fine-tuning. See paper: [The Power of Scale for Parameter-Efficient Prompt Tuning
-](https://arxiv.org/pdf/2104.08691.pdf).
+](https://arxiv.org/pdf/2104.08691.pdf)[[2]](#2).
 ![Image](./asset/tuning.png)
 
 Prior to this task, my team has conducted benchmarking analysis of `LLaMA-13B`, `Vicuna-13B`, `ChatGLM-6B` and `ChatGPT`. We designed questions from several
@@ -151,7 +151,7 @@ Install all requirements:
 ```shell
 pip3 install -r requirements.txt
 ```
-`Python` version is `3.10`.
+`Python` version is `3.10` or later.
 # Code and Data
 
 ## EDA:
@@ -174,3 +174,17 @@ Outputs are saved to `data/para_topic_clean.csv` and `data/title_topic_clean.csv
 ## Task 3:
 - Run [Subtopics Year 2023.ipynb](Subtopics%20Year%202023.ipynb) to compare LDA, summarizer and `GPT-4` to extract subtopics and key messages.
 - Run [Identify_topics_and_key_messages.ipynb](Google_Colab/Identify_topics_and_key_messages.ipynb) to extract subtopics and key messages using `ChatGLM2-6B`.
+
+# References
+
+<a id="1">[1]</a> 
+Zeng et al., (2022). 
+Glm-130b: An open bilingual pre-trained model.
+arXiv preprint arXiv:2210.02414
+
+<a id="2">[2]</a> 
+Lester, Brian  and
+      Al-Rfou, Rami  and
+      Constant, Noah, (2021). 
+The Power of Scale for Parameter-Efficient Prompt Tuning.
+Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing
