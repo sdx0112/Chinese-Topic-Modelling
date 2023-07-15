@@ -20,7 +20,7 @@ Specifically, there are 9 notes recorded in 2023, whereas 50 notes were document
 Upon closer examination of the notes from Year 2023, we observe that the available notes span only from January to April: ![Image](./asset/month_histogram.png)
 
 
-# Classify topics of the notes
+# Task 1: Find the topic of each meeting note
 In the given task, there are a total of 24 pre-defined topics. Considering that each note consists of multiple paragraphs, 
 and these paragraphs may discuss different topics, it is more reasonable to classify the topic at the paragraph level rather than the document level.
 
@@ -61,8 +61,8 @@ was released with new features and better performance. So `ChatGLM2-6B` is selec
 In this work:
 - For `GPT-4`,  I tested [zero-shot learning and few-shot learning](GPT-FewShot-Test.ipynb). The accuracy of zero-shot learning is `87.5%` and that of few-shot learning is `79.2%`.
 - For `ChatGLM2-6B`, I tested [zero-shot learning, few-shot learning](Google_Colab/ChatGLM2_6B_zero_shot_vs_few_shot.ipynb), and [P-tuning](Google_Colab/ChatGLM2_6B_P_Tuning_v2.ipynb). 
-The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`.
-It is worth noting that P-tuning exhibits a significant improvement in accuracy compared to both zero-shot and few-shot learning. 
+The accuracy of zero-shot learning is `12.5%` and that of few-shot learning is `8.3%`. The accuracy of P-tuning is `58.3%`, which is `66.7%` of `GPT-4`.
+Considering the size of `ChatGLM2-6B` is only about `3.4%` of `ChatGPT`, it is worth noting that P-tuning exhibits a significant improvement in accuracy compared to both zero-shot and few-shot learning. 
 
 The decrease in performance from zero-shot learning to few-shot learning can potentially be attributed to the limited size of the sample data used in the latter approach.
 
@@ -101,7 +101,7 @@ To detect this scenario, a similarity threshold can be set when searching for th
 Once all such new topics have been identified, the LLM can be utilized again to cluster these new topics into a smaller number of more focused topics. 
 These newly clustered topics can then be suggested for inclusion in the pre-defined list.
 
-# Identify top 3 emerging topics in Year 2023
+# Task 2: Identify the top 3 emerging topics in Year 2023.
 To identify emerging topics in Year 2023, the first thought is to compare the topic frequency in Year 2022 and in Year 2023.
 Since there are only 9 notes in Year 2023, it is more meaningful to [compare the frequency in percentage](Emerging%20Topics%202023%20Clean.ipynb).
 For each topic, the increase from Year 2022 to Year 2023 is measured by `percentage in Year 2023 - percentage in Year 2022`.
@@ -111,9 +111,9 @@ The top 3 topics that experienced the highest increase from Year 2022 to Year 20
 - `就业`
 - `区域发展`
 
-# Identify the subtopics or key messages for topic `企业发展` in Year 2023
+# Task 3: Analyze and identify subtopics and key messages within the meeting notes for one topic in task 2.
 
-`企业发展` was selected here because it has the largest number of notes in Year 2023.
+`企业发展` was selected here because it was ranked top 1 in task 2, and has the largest number of notes in Year 2023.
 There are several ways to extract topics and key messages from a list of texts.
 - LDA: LDA is a topic modeling algorithm that helps uncover the underlying thematic structure in a collection of documents. It is an unsupervised machine learning technique that allows us to discover latent topics and their distribution in a corpus.
 - Summarizer: Summarizer automatically generates a concise and coherent summary that captures the most important information from a given text or set of texts. The key idea is to leverage natural language processing techniques to identify significant sentences or passages that effectively represent the main points or key messages of the original content.
@@ -136,8 +136,9 @@ However, two critical issues were identified:
 - Scalability issue: The quota limitation of the OpenAI API posed a challenge for scaling up the experiments.
 - Data privacy issue: The sensitivity of the meeting note data prevented the use of certain methods that require sending data to external APIs.
 
-P-tuning of `ChatGLM2-6B` on a small sample set demonstrated significant improvement, and the model can be deployed locally. 
-This approach holds great promise for various applications.
+P-tuning of `ChatGLM2-6B` on a small sample set achieves 66.7% of the performance of `GPT-4`. 
+The notable improvement shown by `ChatGLM2-6B`, despite its size being approximately `3.4%` of `ChatGPT`, along with its suitability for local deployment, 
+highlights the immense potential of this approach for a wide range of applications.
 
 For topic extraction, I compared LDA, summarizer and LLMs. The comparative analysis revealed that LLMs, especially `GPT-4`, produced the most favorable results for topic extraction.
 
@@ -153,7 +154,9 @@ pip3 install -r requirements.txt
 `Python` version is `3.10`.
 # Code and Data
 
+## EDA:
 - Run [EDA.ipynb](EDA.ipynb) to perform data exploration and output cleaned version of raw data `data/meeting notes clean.csv`.
+## Task 1:
 - Manually labelled some paragraphs for training `data/labelled_sample.csv` and some others for testing `data/labelled_test.csv`.
 - Run [GPT-FewShot-Test.ipynb](GPT-FewShot-Test.ipynb) to perform `GPT-4` zero-shot learning and few-shot learning on sample data.
 - Run [GPT-4 Zero Shot Paragraph.ipynb](GPT-4%20Zero%20Shot%20Paragraph.ipynb) to split content into paragraphs and saved to `data/all_para.csv`.
@@ -166,6 +169,8 @@ Outputs are saved to `data/para_topic.csv` and `data/title_topic.csv`.
 It also produces the clean version for all paragraphs and all titles.
 Outputs are saved to `data/para_topic_clean.csv` and `data/title_topic_clean.csv`.
 - Run [Topic Aggregation Clean.ipynb](Topic%20Aggregation%20Clean.ipynb) to produce the final clean topics for each note and save to `data/id_topics_all.csv`.
+## Task 2:
 - Run [Emerging Topics 2023 Clean.ipynb](Emerging%20Topics%202023%20Clean.ipynb) to identify top 3 emerging topics in Year 2023.
+## Task 3:
 - Run [Subtopics Year 2023.ipynb](Subtopics%20Year%202023.ipynb) to compare LDA, summarizer and `GPT-4` to extract subtopics and key messages.
 - Run [Identify_topics_and_key_messages.ipynb](Google_Colab/Identify_topics_and_key_messages.ipynb) to extract subtopics and key messages using `ChatGLM2-6B`.
